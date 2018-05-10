@@ -1,0 +1,69 @@
+<% include ../partials/header %>
+<% include ../ejs-functions/capFirst %>
+
+<link href="/stylesheets/form.css" rel="stylesheet">
+<div class="container mt-2" id="frame">
+    <div class="col-lg-12">
+        <form class="form-new-entry" method="post" action="/new-entry/submit" onsubmit="return validateForm()" novalidate>
+            <div class="text-center mb-4">
+                <h1 class="h3 mb-3 font-weight-normal">Create a new <%=typeName%> entry </h1> 
+            </div>
+
+            <input type="hidden" value="<%=typeName%>" name="type" />
+
+            <div class="form-label-group">
+                <input type="text" id="name" name="name" class="form-control" placeholder="name" maxlength="80" required autofocus>
+                <div class="invalid-feedback">
+                    Name required
+                </div>
+                <label for="name">Name</label>
+            </div>
+            <div class="form-label-group">
+                <input type="url" id="image" name="image" class="form-control" placeholder="image" required>
+                <div class="invalid-feedback">
+                    Invalid URL
+                </div>
+                <label for="image">Image URL</label>
+            </div>
+            <% fieldList.forEach(function(field){ %>
+                <div class="form-label-group">
+                    <input type="text" id="<%=field%>" name="<%=field%>" class="form-control" placeholder="<%=field%>">
+                    <label for="<%=field%>"><%=capFirst(field);%></label>
+                </div>
+            <% }) %>
+            <label for="details mt-1">Description:</label>
+            <div class="form-group">
+                <textarea class="form-control" rows="5" name="description" id="description"  maxlength="1000";></textarea>
+                <div class="invalid-feedback">
+                    Description cannot be more than 1000 characters
+                </div>
+            </div> 
+
+            <button class="btn btn-lg btn-primary btn-block submit-button mb-2" type="submit">Submit new entry</button>
+            <p> or <a href="javascript:history.back()">Go Back</a></p>
+        </form>
+    </div>
+</div>
+        <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('form-new-entry');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+        </script>
+
+<% include ../partials/footer %>

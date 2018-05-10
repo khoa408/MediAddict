@@ -1,0 +1,231 @@
+<% include ../partials/header %>
+<% include ../ejs-functions/capFirst %>
+
+<link href="/stylesheets/entry.css" rel="stylesheet" type="text/css">
+<div class="info-top pt-3 pb-4">
+  <div id="main" class="container">
+    <div class="row"> </div>
+    <div class="row">
+      <div class="col-xl-3 poster-container"> <img id="poster" class="img-fluid" src="<%=entry.image%>"> </div>
+      <div class="col-xl-9">
+        <div class="row type-row ml-0" style="margin-bottom:2rem">
+          <p class="type-badge"><span class="badge badge-warning" style="background-color: #D0CFCD; font-size:90%">
+           <%if(typeof entry.type.id.fontAweIcon !== "undefined"){%> 
+              <i class="fas fa-<%=entry.type.id.fontAweIcon%>"></i> 
+           <%}%>
+          <%=capFirst(entry.type.name)%></span>
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-auto">
+            <h1><%=entry.name%></h1>
+          </div>
+          <div class="col-auto">
+            <h2><span class="badge badge-info" style="background-color: #64ACC9;">
+              <i class="fas fa-star fa-xs" style="bottom: 0.2rem; position: relative;"></i>
+              <%if (rating < 0){%>
+                -/5
+              <%}else{%>
+                <%=rating%>/5
+               <%}%>
+            </span></h2>
+          </div>
+        </div>
+        <div class="row short-details pt-2 mt-2">
+          <% entry.detailList.forEach(function(detail){%>
+            <div class = "col-xl-auto">
+              <p><span class="dark-caption"><%=capFirst(detail.field)%>:</span> <%=detail.content%> </p>
+            </div>
+          <%})%>
+          
+        </div>
+        <div class="row desc mt-3 pl-3">
+          <p><%=entry.description%></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="info-bottom pt-3">
+  <div class="container" >
+    <div class="row mb-1">
+      <h4><em><i class="fas fa-chart-line mr-3 fa-lg"></i>Top user suggestions... </em></h4>
+    </div>
+    <div class="row">
+      <ul class="nav nav-tabs" id="recTab" role="tablist">
+        <li class="nav-item"> <a class="nav-link active" id="all-tab" data-toggle="tab" href="#all" role="tab" aria-controls="all" aria-selected="true">All</a> </li>
+        
+        <%for(let type of typeList){%>
+        
+          <li class="nav-item"> 
+            <a class="nav-link" id="<%=type.name%>-tab" data-toggle="tab" href="#<%= type.name === "music album"? "music":type.name %>" role="tab" aria-controls="<%=type.name%>" 
+            aria-selected="false">
+              <%=capFirst(type.name)+"s" %>
+              
+            </a> 
+          </li>
+        <%}%>
+       <!--  
+       <li class="nav-item"> 
+       <a class="nav-link" id="movies-tab" data-toggle="tab" href="#movies" role="tab" aria-controls="movies" aria-selected="false">
+         Movies
+         </a> 
+       </li>
+        <li class="nav-item"> <a class="nav-link" id="shows-tab" data-toggle="tab" href="#shows" role="tab" aria-controls="shows" aria-selected="false">Shows</a> </li>
+        <li class="nav-item"> <a class="nav-link" id="books-tab" data-toggle="tab" href="#books" role="tab" aria-controls="books" aria-selected="false">Books</a> </li>
+        <li class="nav-item"> <a class="nav-link" id="games-tab" data-toggle="tab" href="#games" role="tab" aria-controls="games" aria-selected="false">Games</a> </li> -->
+      </ul>
+    </div>
+    <div class="row display-tabs pt-3">
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
+          <ul class="suggestion-grid pb-3" id="custom-scrollbar">
+            <%if (manRecList.length === 0) {%>
+              <div><p style="text-align: center;"> No entries. </p></div>
+
+            <%} else {%>
+            <%for (var i=0; i<20; i++){%>
+            <%if (typeof manRecList[i] !== "undefined"){%>
+            <li class="col-sm-2 suggestion-grid-item"> 
+              <a href="<%=manRecList[i].targetEntry_id._id%>">
+                <img class="img-fluid suggestion-grid-poster" src="<%=manRecList[i].targetEntry_id.image%>">
+              </a> 
+            </li>
+            <%}}}%>
+           
+          </ul>
+        </div>
+        
+       <!--  <div class="tab-pane fade" id="movies" role="tabpanel" aria-labelledby="movies-tab">
+          <ul class="suggestion-grid pb-3" id="custom-scrollbar">
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://ia.media-imdb.com/images/M/MV5BZTMxMGM5MjItNDJhNy00MWI2LWJlZWMtOWFhMjI5ZTQwMWM3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg"></a> </li>
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://ia.media-imdb.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,665,1000_AL_.jpg"></a> </li>
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://ia.media-imdb.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_.jpg"> </a></li>
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://ia.media-imdb.com/images/M/MV5BYjhlMGYxNmMtOWFmMi00Y2M2LWE5NWYtZTdlMDRlMGEzMDA3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SY1000_CR0,0,676,1000_AL_.jpg"> </a></li>
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://ia.media-imdb.com/images/M/MV5BMjA0ODEzMTc1Nl5BMl5BanBnXkFtZTcwODM2MjAxNA@@._V1_SY1000_CR0,0,664,1000_AL_.jpg"> </a></li>
+          </ul>
+        </div> -->
+
+
+        
+        <% for(let type of typeList){%>
+
+        <div class="tab-pane fade" id="<%= type.name === "music album"? "music":type.name %>" role="tabpanel" aria-labelledby="<%=type.name%>-tab">
+          <ul class="suggestion-grid pb-3" id="custom-scrollbar">
+            <%var count=0; for (var i=0; i< manRecList.length && count <= 20; i++){%>
+            <%if(type.name == manRecList[i].targetEntry_id.type.name){%>
+            <li class="col-sm-2 suggestion-grid-item"> <a href="manRecList[i].targetEntry_id._id"><img class="img-fluid suggestion-grid-poster" 
+              src="<%=manRecList[i].targetEntry_id.image%>"></a> </li>
+              <%count++; }%>
+            <%}%>
+            <%if ( count ===0) {%> <div><p style="text-align: center;"> No entries. </p></div> <%}%>
+          </ul>
+        </div>
+        <%}%>
+<!--         <div class="tab-pane fade" id="movies" role="tabpanel" aria-labelledby="movies-tab">
+          <ul class="suggestion-grid pb-3" id="custom-scrollbar">
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://ia.media-imdb.com/images/M/MV5BZTMxMGM5MjItNDJhNy00MWI2LWJlZWMtOWFhMjI5ZTQwMWM3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg"></a> </li>
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://ia.media-imdb.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,665,1000_AL_.jpg"></a> </li>
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://ia.media-imdb.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_.jpg"> </a></li>
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://ia.media-imdb.com/images/M/MV5BYjhlMGYxNmMtOWFmMi00Y2M2LWE5NWYtZTdlMDRlMGEzMDA3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SY1000_CR0,0,676,1000_AL_.jpg"> </a></li>
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://ia.media-imdb.com/images/M/MV5BMjA0ODEzMTc1Nl5BMl5BanBnXkFtZTcwODM2MjAxNA@@._V1_SY1000_CR0,0,664,1000_AL_.jpg"> </a></li>
+          </ul>
+        </div>
+        <div class="tab-pane fade" id="shows" role="tabpanel" aria-labelledby="shows-tab">
+          <ul class="suggestion-grid pb-3" id="custom-scrollbar">
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://ia.media-imdb.com/images/M/MV5BZmM4YTE5ZjYtODY3YS00OTE1LTgyNzQtNmNmOTNmNDEzYTI1XkEyXkFqcGdeQXVyMzQ0MzA0NTM@._V1_.jpg"></a> </li>
+          </ul>
+        </div>
+        <div class="tab-pane fade" id="books" role="tabpanel" aria-labelledby="books-tab">
+          <ul class="suggestion-grid pb-3" id="custom-scrollbar">
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://images.gr-assets.com/books/1327942880l/2493.jpg"> </a></li>
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://images.gr-assets.com/books/1402600310l/10964.jpg"> </a></li>
+            <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://images.gr-assets.com/books/1437728815l/14050.jpg"> </a></li>
+          </ul>
+        </div>
+        <div class="tab-pane fade" id="games" role="tabpanel" aria-labelledby="games-tab">
+		       <ul class="suggestion-grid pb-3" id="custom-scrollbar">
+         	 <li class="col-sm-2 suggestion-grid-item"> <a href=""><img class="img-fluid suggestion-grid-poster" src="https://upload.wikimedia.org/wikipedia/en/7/73/Back_to_the_Future_The_Game.PNG"> </a></li>
+			     </ul>
+        </div> -->
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-xl-6">
+        <div class="row">
+          <div class="col-xl-10 rec-and-reviews-heading">
+            <div class="row">
+              <div class="col-10">
+            <h5><i class="fas fa-comment-alt mr-2" style="color:#4F4F4FFF; vertical-align: middle;"></i> Recommedation entries</h5>
+            </div> 
+            <div class="col">
+              <a href="/entry/<%= entry._id %>/recommendations/new"><i class="far fa-plus-square fa-2x mb-2"></i></a>
+            </div>
+          </div>
+          </div>
+
+        </div>
+        <div class="container recommedations-entries mt-2">
+          <div class="row">
+		  	<ul class="list-group rec-item mt-2">
+          <%recCommentList.forEach(function(recComment){%>
+            <li class="list-group-item">  <strong><%=recComment.author.username%>
+              
+            </strong> recommends <a href="<%=recComment.target.id%>"><strong><em><%=recComment.target.name%></em></strong></a></li>
+          <%})%>
+
+				<!-- <li class="list-group-item"> <a href=""> <strong>nuttysalmon</strong> recommends <strong><em>Back to the Future III</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>ojwefi034</strong> recommends  <strong><em>The Time Machine</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>basfpam</strong> recommends  <strong><em>Back to the Future: The Game</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>pcgamer0033</strong> recommends  <strong><em>Back to the Future: The Game</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>ranesmith</strong> recommends  <strong><em>Back to the Future III</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>lorenial</strong> recommends  <strong><em>Back to the Future III</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>reader124</strong> recommends  <strong><em>Iron Man</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>lorenial</strong> recommends  <strong><em>Back to the Future II</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>halogreen</strong> recommends <strong> <em>Back to the Future III</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>johndoe354</strong> recommends <strong> <em>Back to the Future: The Game</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>lorenial</strong> recommends  <strong><em>Back to the Future III</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>detalwork</strong> recommends  <strong><em>Back to the Future II</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>detalwork</strong> recommends <strong> <em>The Time Traveller's Wife</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>horinza</strong> recommends  <strong><em>Back to the Future III</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>io30man</strong> recommends  <strong><em>Back to the Future III</em></strong></a></li>
+				<li class="list-group-item"><a href=""> <strong>pratratic</strong> recommends  <strong><em>Back to the Future II</em></strong></a></li>
+			 --></ul>
+          </div>
+        </div>
+      </div>
+		
+      <div class="col-xl-6">
+        <div class="row">
+          <div class="col-xl-10 rec-and-reviews-heading">
+            <div class="row">
+              <div class="col-10">
+            <h5> <i class="fas fa-clipboard mr-2 fa-lg" style="color:#4F4F4FFF; vertical-align: middle;"></i> Reviews and Ratings</h5>
+            </div> 
+            <div class="col">
+              <a href="/entry/<%= entry._id %>/reviews/new"> <i class="far fa-plus-square fa-2x mb-2"></i> </a>
+            </div>
+          </div>
+          <div class="col-xl-6"></div>
+        </div>
+        <div class="row">
+			<div class="container recommedations-entries mt-2">
+				<!-- <ul class="list-group rec-item mt-2">
+				<li class="list-group-item"> <a href=""> <strong>nuttysalmon</strong> rates this  <strong>4.5</strong></a></li>
+				<li class="list-group-item"> <a href=""> <strong>horinza</strong> rates this  <strong>4.9</strong> - "One of the greatest movies ever made."</a></li>
+				<li class="list-group-item"> <a href=""> <strong>pratratic</strong> rates this  <strong>3.9</strong> - "It's alright I guess."</li></a> -->
+
+        <%entry.reviewList.forEach(function(review){ %>
+          <li class="list-group-item"> <a href=""> <strong><%=review.author.username%></strong> rates this  
+            <strong><%=review.rating%></strong>  <%= review.comment ? '- "' +  review.comment + '"' :"" %> 
+          </a></li>
+
+        <%})%>
+				</ul>
+			</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% include ../partials/footer %>

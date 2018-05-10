@@ -1,0 +1,63 @@
+@import "color.css";
+
+.login-bg{
+	 color: var(--light-grey);
+	 background-color: var(--dark-grey);
+	 position: fixed;
+	 height: 100%;
+	 width: 100%;
+}
+
+.flash-top{
+	 background-color: var(--dark-grey);
+	 padding-right: 20%;
+	 padding-left: 20%;
+	 margin-right: 0px; 
+	 margin-left: 0px;
+	 min-width: 100%;
+}
+
+.flash-top .alert{
+	margin-bottom: 0px;
+}
+
+label.login-label{
+   color: var(--mid-grey);
+} 
+
+.form-control:focus{
+    border-color: var(--light-blue);  
+    /*box-shadow: none; 
+    -webkit-box-shadow: none;*/
+} 
+
+.login-fields{
+    border-top-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-radius: 0px;
+    background-color: transparent;
+} 
+
+.login-fields.form-control:focus{
+    border-color: var(--light-blue);  
+    box-shadow: none; 
+    -webkit-box-shadow: none;
+    background-color: transparent;
+} 
+
+.form-label-group {
+	color: var(--light-grey);
+}
+
+input#username, input#password {
+    color: var(--light-grey);
+}
+
+.form-signin{
+    border-style: solid;
+    border-color: var(--theme-color);
+    min-width: 30rem;
+    width: 80%;
+    padding: 5rem;
+}
