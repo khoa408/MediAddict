@@ -1,3 +1,5 @@
+/* not yet implimented */
+
 var mongoose = require("mongoose");
 
 var commentSchema = mongoose.Schema({
