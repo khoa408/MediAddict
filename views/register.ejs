@@ -1,79 +1,77 @@
 <% include ./partials/header %>
 <link href="/stylesheets/form.css" rel="stylesheet">
 
-    <div class="col-lg-12 register-wrap" id="main">
-        <form class="form-register" method="post" action="/users/register" onsubmit="return validateForm()" novalidate>
-            <div class="text-center mb-4">
-                <h1 class="h3 mb-3 font-weight-normal">Make an account <!-- <i class="fas fa-user-plus mr-2 fa-sm"></i> --></h1>
-            </div>
-            <div class="form-label-group">
-                <input type="email" id="email" name="email" class="form-control" placeholder="avatar" required autofocus>
-                <label for="email">Email</label>
-                <div class="invalid-feedback" min=5>
-                    Invalid email
-                </div>
-            </div>
-            <div class="form-label-group">
-                <input type="text" id="username" name="username" class="form-control" placeholder="username" min="5" max="20" required>
-                <div class="invalid-feedback">
-                    Invalid username
-                </div>
-                <label for="username">Username</label>
-            </div>
-            <div class="form-label-group">
-                <input type="text" id="avatar" name="avatar" class="form-control" placeholder="avatar">
-                <label for="avatar">Avatar URL</label>
-            </div>
-            <div class="form-label-group">
-                <input type="password" id="password" name="password" class="form-control" placeholder="password" required>
-                <div class="invalid-feedback">
-                    Cannot be empty
-                </div>
-                <label for="password">Password</label>
-            </div>
-            <div class="form-label-group">
-                <input type="password" id="password2" name="password2" class="form-control" placeholder="password2" onblur="checkPasscode();" required>
-                <div class="invalid-feedback">
-                    Password does not match
-                </div>
-                <label for="password2">Confirm Password</label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block submit-button" type="submit">Register</button>
+<div class="col-lg-12 register-wrap" id="main">
+	<form class="form-register" method="post" action="/users/register" onsubmit="return validateForm()" novalidate>
+		<div class="text-center mb-4">
+			<h1 class="h3 mb-3 font-weight-normal">Make an account <!-- <i class="fas fa-user-plus mr-2 fa-sm"></i> --></h1>
+		</div>
+		<div class="form-label-group">
+			<input type="email" id="email" name="email" class="form-control" placeholder="avatar" required autofocus>
+			<label for="email">Email</label>
+			<div class="invalid-feedback" min=5>
+				Invalid email
+			</div>
+		</div>
+		<div class="form-label-group">
+			<input type="text" id="username" name="username" class="form-control" placeholder="username" min="5" max="20" required>
+			<div class="invalid-feedback">
+				Invalid username
+			</div>
+			<label for="username">Username</label>
+		</div>
+		<div class="form-label-group">
+			<input type="text" id="avatar" name="avatar" class="form-control" placeholder="avatar">
+			<label for="avatar">Avatar URL</label>
+		</div>
+		<div class="form-label-group">
+			<input type="password" id="password" name="password" class="form-control" placeholder="password" required>
+			<div class="invalid-feedback">
+				Cannot be empty
+			</div>
+			<label for="password">Password</label>
+		</div>
+		<div class="form-label-group">
+			<input type="password" id="password2" name="password2" class="form-control" placeholder="password2" onblur="checkPasscode();" required>
+			<div class="invalid-feedback">
+				Password does not match
+			</div>
+			<label for="password2">Confirm Password</label>
+		</div>
+		<button class="btn btn-lg btn-primary btn-block submit-button" type="submit">Register</button>
+		
+	</form>
+</div>
+<script>
+function checkPasscode() {
+	if (document.getElementById('password').value != document.getElementById('password2').value) {
+		document.getElementById('password2').setCustomValidity('Passwords must match.');
+	} else {
+		document.getElementById('password2').setCustomValidity('');
+	}
 
-        </form>
+}
 
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+	'use strict';
+	window.addEventListener('load', function() {
+		// Fetch all the forms we want to apply custom Bootstrap validation styles to
+		var forms = document.getElementsByClassName('form-register');
+		// Loop over them and prevent submission
+		var validation = Array.prototype.filter.call(forms, function(form) {
+			form.addEventListener('submit', function(event) {
+				if (form.checkValidity() === false) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
+				form.classList.add('was-validated');
+			}, false);
+		});
+	}, false);
+})();
+</script>
 
-
-        <script>
-        function checkPasscode() {
-            if (document.getElementById('password').value != document.getElementById('password2').value) {
-                document.getElementById('password2').setCustomValidity('Passwords must match.');
-            } else {
-                document.getElementById('password2').setCustomValidity('');
-            }
-
-        }
-
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-                // Fetch all the forms we want to apply custom Bootstrap validation styles to
-                var forms = document.getElementsByClassName('form-register');
-                // Loop over them and prevent submission
-                var validation = Array.prototype.filter.call(forms, function(form) {
-                    form.addEventListener('submit', function(event) {
-                        if (form.checkValidity() === false) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    }, false);
-                });
-            }, false);
-        })();
-        </script>
-    </div>
 
 
 <% include ./partials/footer %>

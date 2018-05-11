@@ -8,11 +8,14 @@ Heroku link:
 <br />
 http://mediaaddict.herokuapp.com/
 <br />
+<br />
 `Procfile` is for deployment on Heroku
+<br />
 <br />
 To store to local DB:
 <br />
 go to `config.js` & change the Uri
+<br />
 <br />
 To run the app locally, open up Terminal:
 <br />
@@ -20,6 +23,8 @@ To run the app locally, open up Terminal:
 npm install
 node app
 ```
+
+App can be accessed on:
 http://localhost:3000/
 
 ##### Inspired by Yelp-Camp (Ian Schoonover)
