@@ -12,20 +12,27 @@ http://mediaaddict.herokuapp.com/
 `Procfile` is for deployment on Heroku
 <br />
 <br />
+
+DB configuration
+-----------------
 To store to local DB:
 <br />
 go to `config.js` & change the Uri
 <br />
 <br />
+
+Running the app
+-----------------
 To run the app locally, open up Terminal:
 <br />
 ```
 npm install
 node app
 ```
-
 App can be accessed on:
 http://localhost:3000/
 
+<br />
+<br />
 ##### Inspired by Yelp-Camp (Ian Schoonover)
 ##### https://github.com/nax3t/yelp-camp-refactored
