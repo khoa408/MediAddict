@@ -5,22 +5,35 @@
 3. Unit Testing Document: https://docs.google.com/spreadsheets/d/12Akh8klXlvISbLOks-uYuuq1ij8xG0DkWOzvXKm_fxo/edit?usp=sharing
 
 Heroku link:
-<br />
+<br/>
 http://mediaaddict.herokuapp.com/
-<br />
+<br/>
+<br/>
 `Procfile` is for deployment on Heroku
-<br />
+<br/>
+<br/>
+
+DB configuration
+-----------------
 To store to local DB:
-<br />
+<br/>
 go to `config.js` & change the Uri
-<br />
+<br/>
+<br/>
+
+Running the app
+-----------------
 To run the app locally, open up Terminal:
-<br />
+<br/>
 ```
 npm install
 node app
 ```
+App can be accessed on:
 http://localhost:3000/
+
+<br/>
+<br/>
 
 ##### Inspired by Yelp-Camp (Ian Schoonover)
 ##### https://github.com/nax3t/yelp-camp-refactored

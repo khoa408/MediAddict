@@ -1,14 +1,15 @@
 {
-  "name": "v1",
+  "name": "Mediaddict",
   "version": "1.0.0",
-  "description": "Mediaddict v1",
+  "description": "Web app for cross media recommendation.",
   "main": "app.js",
   "scripts": {
     "start": "node app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Team 10",
-  "license": "ISC",
+  "homepage": "https://mediaaddict.herokuapp.com",
+  "author": "Team10",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.14.1",
     "bootstrap": "^4.1.1",

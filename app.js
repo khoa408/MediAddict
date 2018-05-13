@@ -1,38 +1,37 @@
-var express         = require("express"),
-    app             = express(),
-    bodyParser      = require("body-parser"),
-    mongoose        = require("mongoose"),
-    passport        = require("passport"),
-    cookieParser    = require("cookie-parser"),
-    flash           = require("connect-flash"),
-    Entry           = require("./models/entry"),
-    Comment         = require("./models/comment"),
-    User            = require("./models/user"),
-    expressSession  = require("express-session"),
-    typeInit        = require("./typeInit"),
-    methodOverride  = require("method-override"),
+var express = require("express"),
+	app = express(),
+	bodyParser = require("body-parser"),
+	mongoose = require("mongoose"),
+	passport = require("passport"),
+	cookieParser = require("cookie-parser"),
+	flash = require("connect-flash"),
+	Entry = require("./models/entry"),
+	User = require("./models/user"),
+	expressSession = require("express-session"),
+	typeInit = require("./typeInit"),
+	methodOverride = require("method-override"),
 
-    //used for storing in mongodb
-    connectMongo = require('connect-mongo'),
-    MongoStore = connectMongo(expressSession);
+	//used for session storing in mongodb
+	connectMongo = require('connect-mongo'),
+	MongoStore = connectMongo(expressSession);
 
-    // configure dotenv
-    require('dotenv').load();
+// configure dotenv
+require('dotenv').load();
 
 //requiring routes
-var commentRoutes   = require("./routes/comments"),
-    entryRoutes     = require("./routes/entry"),
-    indexRoutes     = require("./routes/index"),
-    userRoutes      = require("./routes/users"),
-    newEntryRoutes  = require("./routes/newEntry"),
-    reviewRoutes    = require("./routes/reviews"),
-    recRoutes       = require("./routes/recComments"),
-    searchRoutes    = require("./routes/search"),
-    config          = require("./config");
+var entryRoutes = require("./routes/entry"),
+	indexRoutes = require("./routes/index"),
+	userRoutes = require("./routes/users"),
+	newEntryRoutes = require("./routes/newEntry"),
+	reviewRoutes = require("./routes/reviews"),
+	recRoutes = require("./routes/recComments"),
+	searchRoutes = require("./routes/search"),
+	config = require("./config");
 
-
+//connect to mongodb
 mongoose.connect(config.mongoUri);
-app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -54,14 +53,14 @@ app.locals.moment = require('moment');
 typeInit();
 
 
-// PASSPORT CONFIGURATION
+
 app.use(expressSession({
-    secret: "We spent too much time on this!",
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({
-           mongooseConnection: mongoose.connection 
-        })
+	secret: "We spent too much time on this!",
+	resave: false,
+	saveUninitialized: false,
+	store: new MongoStore({
+		mongooseConnection: mongoose.connection
+	})
 }));
 
 app.use(flash());
@@ -69,11 +68,12 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(req, res, next){
-   res.locals.currentUser = req.user;
-   res.locals.success = req.flash('success');
-   res.locals.error = req.flash('error');
-   next();
+
+app.use(function(req, res, next) {
+	res.locals.currentUser = req.user;
+	res.locals.success = req.flash('success');
+	res.locals.error = req.flash('error');
+	next();
 });
 
 //url routing
@@ -81,7 +81,6 @@ app.use("/", indexRoutes);
 app.use("/entry", entryRoutes);
 app.use("/users", userRoutes);
 app.use("/new-entry", newEntryRoutes);
-//app.use("/entry/:id/comments", commentRoutes);
 app.use("/entry/:id/reviews", reviewRoutes);
 app.use("/entry/:id/recommendations", recRoutes);
 app.use("/search", searchRoutes);
@@ -90,5 +89,5 @@ app.use("/search", searchRoutes);
 app.set('port', (process.env.PORT || 3000));
 
 app.listen(app.get('port'), function() {
-    console.log('Server started on port ' + app.get('port'));
+	console.log('Server started on port ' + app.get('port'));
 });
